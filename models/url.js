@@ -1,18 +1,18 @@
-const mongo = require('mongoose')
+const mongoose = require('mongoose')
 
-const urlSchema = mongo.Schema({
-    shortid:{
+const userSchema = mongoose.Schema({
+    URL:{
+        type:String,
+        required:true
+    },
+    ShortID:{
         type:String,
         required:true,
         unique:true
     },
-    redirecturl:{
-        type:String,
-        required:true
-    },
-    visitorHistory:[{timestamp:{type:Number}}]
-},{timestamp:true})
+    VisitorHistory:[{timestamp:{type:Number}}]
+})
 
-const url = mongo.model('url',urlSchema)
+const Url = mongoose.model('url',userSchema)
 
-module.exports = url
+module.exports = Url

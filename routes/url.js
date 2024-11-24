@@ -1,9 +1,10 @@
 const express = require('express')
-const {createurl, handlegetreq,handledetails} = require('../controllers/url')
 const router = express.Router()
+const {handledetail,handleget,handlepost} = require('../controllers/url')
 
-router.post('/',createurl)
-router.get('/:shortId',handlegetreq)
-router.get('/analytics/:shortId',handledetails)
+router.post('/',handlepost)
+router.get('/:ShortID',handleget)
+router.get('/clicks/:ShortID',handledetail)
+
 
 module.exports = router
