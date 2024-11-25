@@ -6,6 +6,19 @@
     <title>Home page</title>
 </head>
 <body>
-    <h1>signup done</h1>
+    <h1>Url Shortener</h1>
+    <form action="/api/" method="post">
+        <input type="text" name="url" placeholder="Enter Orignal Url"><br>
+        <button type="submit">Genrate</button>
+    </form>
+
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <% if (shortUrl) { %>
+        <p>Shortened Url: <a href="<%= shortUrl %>"> <%= shortUrl %></a></p>
+     
+    <% } %>
 </body>
 </html>

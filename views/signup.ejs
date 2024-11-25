@@ -7,12 +7,18 @@
 </head>
 <body>
     <h1>SignUp</h1>
-    <form action="/user" method="POST">
+    <form action="/signup" method="POST">
         <input type="text" placeholder="Enter name" name="name" required><br>
         <input type="text" placeholder="Enter email" name="email" required><br>
         <input type="password" placeholder="Enter password" name="password" required><br>
         <button type="submit">SignUp</button>
     </form>
+
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
     
+    <p>Already have an account ? <a href="/login">Login here</a></p>
+
 </body>
 </html>

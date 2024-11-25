@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const {handledetail,handleget,handlepost} = require('../controllers/url')
+const {handledetail,handleget,handlepost,homepage} = require('../controllers/url')
+const {authenticatetoken} = require('../middleware/auth')
 
-router.post('/',handlepost)
+router.get('/',authenticatetoken, homepage)
+router.post('/',authenticatetoken ,handlepost)
 router.get('/:ShortID',handleget)
-router.get('/clicks/:ShortID',handledetail)
+router.get('/details/:ShortID',authenticatetoken, handledetail)
 
 
 module.exports = router

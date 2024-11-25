@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details of Urls</title>
+</head>
+<body>
+    <h1>Details</h1>
+    <p>Orignal Url: <%= url %></p>
+    <p>Short Url: <a href="<%= shortUrl %>"> <%= url.ShortID %></a></p>
+    <p>Visitor Count: <%= visitorCount %></p>
+    <button onclick="window.history.back()">Go Back</button>
+    
+</body>
+</html>

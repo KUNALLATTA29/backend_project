@@ -4,7 +4,7 @@ const shortid = require('shortid')
 async function handlepost(req,res){
     const url = req.body.url
     if(!url){
-        return res.status(400).json({error:"url is required"})
+        res.render('home',{error:"url is required",shortUrl:null})
     }
     try{
         const short = shortid()
@@ -14,10 +14,11 @@ async function handlepost(req,res){
             VisitorHistory:[]
     
         })
-        return res.status(200).json({id:short})
+        const shortUrl = `http://localhost:8001/api/${short}`
+        res.render('home',{error:null,shortUrl})
 
     }catch(err){
-        return res.json({error:"server is not responding",err})
+         res.render('error',{message:"server is not responding"})
     }
     
 }
@@ -25,7 +26,7 @@ async function handlepost(req,res){
 async function handleget(req,res){
     const ShortID = req.params.ShortID
     if(!ShortID){
-        return res.status(400).json({error:"shortid is required"})
+        res.render('error',{message:"shortid is required"})
     }
     
     try{
@@ -38,43 +39,48 @@ async function handleget(req,res){
             }
         },{new:true})
         if (!result) {
-            return res.status(404).json({ error: "URL not found" });
+            res.render('error',{ error: "URL not found" });
         }
-        if (!result.URL) { 
-            return res.status(500).json({ error: "URL is missing in the database" });
-        }
-        console.log(">>>>>>>>>>>>>url>>>>>>>>>",result.URL)
-    
-        return res.redirect(result.URL)
+
+        res.redirect(result.URL)
 
     }catch(err){
-        return res.status(500).json({error:"server is not responding",err})
+         res.render('error',{message:"server is not responding"})
     }
 
+}
+
+async function homepage(req,res){
+    return res.render('home',{error:null, shortUrl:null})
 }
 
 async function handledetail(req,res){
     const ShortID = req.params.ShortID
     if(!ShortID){
-        return res.status(400).json({error:"shortid is required"})
+        res.render('error',{message:"shortid is required"})
     }
     console.log(ShortID)
     try{
         const result = await Url.findOne({ShortID})
         console.log(result.URL)
         if(!result){
-            return res.status(404).json({error:"url not found"})
+            res.render('error',{message:"url not found"})
         }
     
-        return res.status(200).json(result.VisitorHistory.length)
+        res.render('details',{
+            url:result.URL,
+            shortUrl:result.ShortID,
+            visitorCount:result.VisitorHistory.length,
+        })
 
     }catch(err){
-        return res.status(500).json({error:"server is not responding",err})
+        res.render('error',{message:"server is not responding"})
     }
 }
 
 module.exports = {
     handledetail,
     handleget,
-    handlepost
+    handlepost,
+    homepage
 }
